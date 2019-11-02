@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Billy Big Bass</string>
+    <string name="title">Billy Big Bass\'s Big Bass Bash</string>
+    <string name="go_fishing">Go Fishing!</string>
+    <string name="high_scores">High Scores</string>
+    <string name="fishing">Fishing</string>
 </resources>
