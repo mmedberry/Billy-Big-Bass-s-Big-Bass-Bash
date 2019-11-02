@@ -38,7 +38,8 @@
         android:text="@string/high_scores"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintTop_toBottomOf="@+id/button"
+        android:onClick="startRecordsActivity"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

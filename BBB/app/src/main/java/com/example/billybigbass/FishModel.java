@@ -10,19 +10,19 @@ public class FishModel extends ViewModel {
     private int mWeight;
     private int mDifficulty;
 
-    public String getmName() {
+    public String getName() {
         return mName;
     }
 
-    public int getmLength() {
+    public int getLength() {
         return mLength;
     }
 
-    public int getmWeight() {
+    public int getWeight() {
         return mWeight;
     }
 
-    public int getmDifficulty() {
+    public int getDifficulty() {
         return mDifficulty;
     }
 
