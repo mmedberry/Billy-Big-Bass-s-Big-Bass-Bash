@@ -30,8 +30,8 @@ public enum FishData {
             difficulty = 1;
         } else {
             Random random = new Random();
-            length = random.nextInt(size * 5 - 1) + 1;
-            weight = random.nextInt(size * 5 - 1) + 1;
+            length = random.nextInt(size * 5 - 1) + size;
+            weight = random.nextInt(size * 5 - 1) + size;
             difficulty = size;
         }
 
