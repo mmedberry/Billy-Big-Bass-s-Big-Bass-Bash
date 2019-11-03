@@ -23,6 +23,11 @@ public class RecordsActivity extends AppCompatActivity {
         userDataModel =(UserDataModel) getIntent().getSerializableExtra("userDataModel");
         updateUI();
     }
+
+    /**
+     * Method to display past fish caught and the record fish of each category
+     */
+    //TODO Make this better
     public void updateUI(){
         List<Fish> fishList = database.eventDao().getAll();
         List<Fish> highScores = userDataModel.getHighScores().getFishList();

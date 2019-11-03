@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 
 /**
- * This class represents the Event object whose data will be stored in the database.
+ * This class represents the Fish object whose data will be stored in the database.
  */
 @Entity(tableName = "fish")
 public class Fish implements Serializable {
@@ -42,7 +42,7 @@ public class Fish implements Serializable {
     }
 
     /**
-     * Constructs an event given data from database
+     * Constructs an Fish given data from database
      */
     public Fish(String name, int length, int weight) {
         this.name = name;
@@ -51,7 +51,7 @@ public class Fish implements Serializable {
     }
 
     /**
-     * Constructs an empty Event, used by Room database query
+     * Constructs an empty Fish, used by Room database query
      */
     public Fish() {
     }

@@ -25,6 +25,10 @@ public class UserDataModel extends ViewModel implements Serializable {
         return highScores;
     }
 
+    /**
+     * Saves user high scores to local file system
+     * @param context
+     */
     public void saveUserData(Context context) {
         File file = new File(context.getFilesDir(), "highScores.txt");
         try {
@@ -39,6 +43,11 @@ public class UserDataModel extends ViewModel implements Serializable {
         }
     }
 
+    /**
+     * Loads user high scores from local file system
+     * @param context
+     * @return HighScores to populate a UserDataModel object
+     */
     public HighScores loadUserData(Context context) {
         File file = new File(context.getFilesDir(), "highScores.txt");
         try {

@@ -2,8 +2,9 @@ package com.example.billybigbass;
 
 import androidx.lifecycle.ViewModel;
 
-import java.util.Random;
-
+/**
+ * ViewModel for updating a FishingActivity
+ */
 public class FishModel extends ViewModel {
     private String mName;
     private int mLength;
@@ -26,6 +27,10 @@ public class FishModel extends ViewModel {
         return mDifficulty;
     }
 
+    /**
+     * Constructor to create a randomized FishModel with given type
+     * @param name Type of fish to create
+     */
     public FishModel(String name) {
         mName = name;
         FishData fishData;

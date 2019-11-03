@@ -17,6 +17,12 @@ public class HighScores implements Serializable {
     public List<Fish> getFishList(){
         return fishList;
     }
+
+    /**
+     * Custom add method to add a new fish if it's a record for its type
+     * @param fish Fish to be added
+     * @return True if fish is added, false if fish isn't added
+     */
     public boolean addFish(Fish fish){
         boolean sameName = false;
         for(Fish oldFish: fishList){

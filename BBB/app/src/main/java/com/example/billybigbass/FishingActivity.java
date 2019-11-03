@@ -40,8 +40,9 @@ public class FishingActivity extends AppCompatActivity {
         database.eventDao().insertFish(fish);
 
         Log.v("saving", "here");
-        if(userDataModel.getHighScores().addFish(fish)){
 
+        //Only save if high scores have been updated
+        if(userDataModel.getHighScores().addFish(fish)){
             userDataModel.saveUserData(this);
         }
 
