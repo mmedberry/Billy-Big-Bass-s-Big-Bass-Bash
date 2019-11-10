@@ -2,6 +2,7 @@ package com.example.billybigbass;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
@@ -44,6 +45,7 @@ public class Fish implements Serializable {
     /**
      * Constructs an Fish given data from database
      */
+    @Ignore
     public Fish(String name, int length, int weight) {
         this.name = name;
         this.length = length;
