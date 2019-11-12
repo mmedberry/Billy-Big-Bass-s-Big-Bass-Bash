@@ -22,6 +22,7 @@ public class FishingActivity extends AppCompatActivity implements SensorUpdateCa
     private AppDatabase database;
     private UserDataModel userDataModel;
     private ImageView indicatorImage;
+    private ImageView reelImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +31,7 @@ public class FishingActivity extends AppCompatActivity implements SensorUpdateCa
         database = AppDatabase.getAppDatabase(this);
         userDataModel = (UserDataModel) getIntent().getSerializableExtra("userDataModel");
         indicatorImage = findViewById(R.id.imageView);
+        reelImage = findViewById(R.id.reelView);
     }
 
 
@@ -95,7 +97,7 @@ public class FishingActivity extends AppCompatActivity implements SensorUpdateCa
         @Override
         protected void onPostExecute(String result) {
             MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.fish_hit);
-            indicatorImage.animate().translationY(100.0f);
+            reelImage.animate().translationY(100.0f);
             mediaPlayer.start();
         }
 
@@ -114,6 +116,18 @@ public class FishingActivity extends AppCompatActivity implements SensorUpdateCa
             }
 
         }
+    }
+
+    public void reel(View view) {
+        indicatorImage.setVisibility(View.GONE);
+        Log.v("reel", "clicked");
+        reelImage.setVisibility(View.VISIBLE);
+        FishingAwaitTimer fishingAwaitTimer = new FishingAwaitTimer(indicatorImage.getRotation(), this);
+        fishingAwaitTimer.execute();
+    }
+
+    public void rotateReel(View view) {
+        //Rotate the reel based on the sensor
     }
 
 }
