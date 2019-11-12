@@ -121,6 +121,7 @@ public class FishingActivity extends AppCompatActivity implements SensorUpdateCa
     public void reel(View view) {
         indicatorImage.setVisibility(View.GONE);
         Log.v("reel", "clicked");
+        findViewById(R.id.button3).setVisibility(View.GONE);
         reelImage.setVisibility(View.VISIBLE);
         FishingAwaitTimer fishingAwaitTimer = new FishingAwaitTimer(indicatorImage.getRotation(), this);
         fishingAwaitTimer.execute();
