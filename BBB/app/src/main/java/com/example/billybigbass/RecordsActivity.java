@@ -15,12 +15,13 @@ public class RecordsActivity extends AppCompatActivity {
 
     private AppDatabase database;
     private UserDataModel userDataModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_records);
         database = AppDatabase.getAppDatabase(this);
-        userDataModel =(UserDataModel) getIntent().getSerializableExtra("userDataModel");
+        userDataModel = (UserDataModel) getIntent().getSerializableExtra("userDataModel");
         updateUI();
     }
 
@@ -28,20 +29,22 @@ public class RecordsActivity extends AppCompatActivity {
      * Method to display past fish caught and the record fish of each category
      */
     //TODO Make this better
-    public void updateUI(){
+    public void updateUI() {
         List<Fish> fishList = database.eventDao().getAll();
         List<Fish> highScores = userDataModel.getHighScores().getFishList();
         TableLayout table = findViewById(R.id.resultTable);
         TableLayout highScoresTable = findViewById(R.id.highScoresTable);
-        for (Fish fish : fishList){
+        int i = 0;
+        for (Fish fish : fishList) {
+            i++;
             TableRow tableRow = new TableRow(this);
             TextView textView = new TextView(this);
-            String text = String.format("%s, length: %d, weight: %d", fish.getName(), fish.getLength(), fish.getWeight());
+            String text = String.format("%d. %s, length: %d, weight: %d", i, fish.getName(), fish.getLength(), fish.getWeight());
             textView.setText(text);
             tableRow.addView(textView);
             table.addView(tableRow);
         }
-        for (Fish fish: highScores){
+        for (Fish fish : highScores) {
             TableRow tableRow = new TableRow(this);
             TextView textView = new TextView(this);
             String text = String.format("Record %s, length: %d, weight: %d", fish.getName(), fish.getLength(), fish.getWeight());

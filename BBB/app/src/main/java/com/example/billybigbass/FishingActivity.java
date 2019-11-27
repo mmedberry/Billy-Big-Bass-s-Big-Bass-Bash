@@ -24,6 +24,7 @@ public class FishingActivity extends AppCompatActivity implements SensorUpdateCa
     private UserDataModel userDataModel;
     private ImageView indicatorImage;
     private ImageView reelImage;
+    private FishingAwaitTimer fishingAwaitTimer = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +36,13 @@ public class FishingActivity extends AppCompatActivity implements SensorUpdateCa
         reelImage = findViewById(R.id.reelView);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (fishingAwaitTimer != null) {
+            fishingAwaitTimer.cancel(true);
+        }
+    }
 
     private void catchFish() {
         Fish fish = new Fish(fishModel.getName(), fishModel.getLength(), fishModel.getWeight());
@@ -45,18 +53,17 @@ public class FishingActivity extends AppCompatActivity implements SensorUpdateCa
         }
     }
 
-    public void getSetHookSensorStatus(SetHookSensor setHookSensor){
-        setHookSensor.start(System.currentTimeMillis()/1000);
+    public void getSetHookSensorStatus(SetHookSensor setHookSensor) {
+        setHookSensor.start(System.currentTimeMillis() / 1000);
     }
 
     @Override
     public void update(boolean success) {
-        if (success){
+        if (success) {
             catchFish();
             TextView text = findViewById(R.id.textView3);
             text.setText("Success!");
-        }
-        else{
+        } else {
             TextView text = findViewById(R.id.textView3);
             text.setText("Failure!");
         }
@@ -69,7 +76,7 @@ public class FishingActivity extends AppCompatActivity implements SensorUpdateCa
         fishModel = new FishModel(fishNames[random.nextInt(4)]);
         Log.v("cast", "clicked");
         indicatorImage.setVisibility(View.VISIBLE);
-        FishingAwaitTimer fishingAwaitTimer = new FishingAwaitTimer(indicatorImage.getRotation(), this, this);
+        fishingAwaitTimer = new FishingAwaitTimer(indicatorImage.getRotation(), this, this);
         fishingAwaitTimer.execute();
     }
 
@@ -80,18 +87,19 @@ public class FishingActivity extends AppCompatActivity implements SensorUpdateCa
         private Context context;
         private FishingActivity fishingActivity;
 
-        public FishingAwaitTimer( float orientation, Context context, FishingActivity fishingActivity){
+        public FishingAwaitTimer(float orientation, Context context, FishingActivity fishingActivity) {
             this.context = context;
             this.orientation = orientation;
             this.fishingActivity = fishingActivity;
         }
+
         @Override
         protected String doInBackground(String... params) {
             try {
                 Random random = new Random();
                 this.time = random.nextInt(10) + 5;
-                int i =0;
-                while (i<time*10){
+                int i = 0;
+                while (i < time * 10) {
                     publishProgress(orientation.toString());
                     Thread.sleep(100);
                     i++;
@@ -118,14 +126,12 @@ public class FishingActivity extends AppCompatActivity implements SensorUpdateCa
         @Override
         protected void onProgressUpdate(String... values) {
             super.onProgressUpdate(values);
-            Log.v("orientation", ""+indicatorImage.getRotation());
-            if(indicatorImage.getRotation()==0.0f){
+            Log.v("orientation", "" + indicatorImage.getRotation());
+            if (indicatorImage.getRotation() == 0.0f) {
                 indicatorImage.animate().rotation(30.0f);
-            }
-            else if (indicatorImage.getRotation()==30.0f){
+            } else if (indicatorImage.getRotation() == 30.0f) {
                 indicatorImage.animate().rotation(-30.0f);
-            }
-            else if(indicatorImage.getRotation()==-30.0f){
+            } else if (indicatorImage.getRotation() == -30.0f) {
                 indicatorImage.animate().rotation(30.0f);
             }
 
@@ -137,7 +143,7 @@ public class FishingActivity extends AppCompatActivity implements SensorUpdateCa
         Log.v("reel", "clicked");
         findViewById(R.id.button3).setVisibility(View.GONE);
         reelImage.setVisibility(View.VISIBLE);
-        FishingAwaitTimer fishingAwaitTimer = new FishingAwaitTimer(indicatorImage.getRotation(), this);
+        FishingAwaitTimer fishingAwaitTimer = new FishingAwaitTimer(indicatorImage.getRotation(), this, this);
         fishingAwaitTimer.execute();
     }
 

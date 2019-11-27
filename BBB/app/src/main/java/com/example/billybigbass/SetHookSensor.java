@@ -20,8 +20,9 @@ public class SetHookSensor implements SensorEventListener {
         double Gz = sensorEvent.values[2];
         if (Math.abs(Gx) >= 5) {
             long stop = System.currentTimeMillis()/1000;
-            if (stop-start<=5){
+            if (stop-start<=2){
                 mCallback.update(true);
+                stop();
             }
             else{
                 mCallback.update(false);
