@@ -78,6 +78,7 @@ public class FishingActivity extends AppCompatActivity implements SensorUpdateCa
         indicatorImage.setVisibility(View.VISIBLE);
         fishingAwaitTimer = new FishingAwaitTimer(indicatorImage.getRotation(), this, this);
         fishingAwaitTimer.execute();
+        findViewById(R.id.button3).setVisibility(View.GONE);
     }
 
     private class FishingAwaitTimer extends AsyncTask<String, String, String> {
@@ -141,7 +142,7 @@ public class FishingActivity extends AppCompatActivity implements SensorUpdateCa
     public void reel(View view) {
         indicatorImage.setVisibility(View.GONE);
         Log.v("reel", "clicked");
-        findViewById(R.id.button3).setVisibility(View.GONE);
+
         reelImage.setVisibility(View.VISIBLE);
         FishingAwaitTimer fishingAwaitTimer = new FishingAwaitTimer(indicatorImage.getRotation(), this, this);
         fishingAwaitTimer.execute();
