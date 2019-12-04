@@ -11,5 +11,5 @@ public interface SensorUpdateCallback {
      *
      * @param value is a float to pass from a Model class to the corresponding Activity
      */
-    void update(float orientation);
+    void update(boolean success);
 }
