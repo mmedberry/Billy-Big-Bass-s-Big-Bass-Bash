@@ -58,7 +58,7 @@ public class FishingActivity extends AppCompatActivity implements SensorUpdateCa
         setHookSensor.start(System.currentTimeMillis() / 1000);
     }
 
-    private void setHookToast(){
+    private void setHookToast() {
 
         CharSequence text = "Shake device to set hook!";
         Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG).show();
