@@ -74,7 +74,8 @@ public class FishingActivity extends AppCompatActivity implements SensorUpdateCa
             indicatorImage.setVisibility(View.GONE);
             indicatorImage = findViewById(R.id.reelView);
             indicatorImage.setVisibility(View.VISIBLE);
-            ReelSensor rs = new ReelSensor(getApplicationContext(), this);
+            Log.w("Fish type", fishModel.getName());
+            ReelSensor rs = new ReelSensor(getApplicationContext(), this, fishModel.getDifficulty());
             rs.start();
         } else {
 
@@ -88,8 +89,13 @@ public class FishingActivity extends AppCompatActivity implements SensorUpdateCa
 
     }
     @Override
-    public void updateReel(float val){
+    public void updateReel(float val, int flag){
         reelImage.setRotation(val);
+        if (flag==1){
+            //Succeed
+        }else if(flag==-1){
+            //Fail
+        }
     }
 
 
