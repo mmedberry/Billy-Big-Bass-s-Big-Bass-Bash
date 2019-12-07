@@ -65,16 +65,17 @@ public class FishingActivity extends AppCompatActivity implements SensorUpdateCa
     }
 
     @Override
-    public void update(boolean success) {
+    public void updateHook(boolean success) {
         if (success) {
             catchFish();
             TextView text = findViewById(R.id.textView3);
-            text.setText("Success!");
+            text.setText("Fish hooked!");
             indicatorImage.clearAnimation();
             indicatorImage.setVisibility(View.GONE);
             indicatorImage = findViewById(R.id.reelView);
             indicatorImage.setVisibility(View.VISIBLE);
-
+            ReelSensor rs = new ReelSensor(getApplicationContext(), this);
+            rs.start();
         } else {
 
             indicatorImage.clearAnimation();
@@ -82,10 +83,15 @@ public class FishingActivity extends AppCompatActivity implements SensorUpdateCa
             indicatorImage = findViewById(R.id.fishView);
             indicatorImage.setVisibility(View.VISIBLE);
             TextView text = findViewById(R.id.textView3);
-            text.setText("Failure!");
+            text.setText("It got away.");
         }
 
     }
+    @Override
+    public void updateReel(float val){
+        reelImage.setRotation(val);
+    }
+
 
     public void cast(View view) {
         Random random = new Random();
@@ -158,15 +164,5 @@ public class FishingActivity extends AppCompatActivity implements SensorUpdateCa
         }
     }
 
-    public void reel(View view) {
-        indicatorImage.setVisibility(View.GONE);
-        Log.v("reel", "clicked");
-
-        reelImage.setVisibility(View.VISIBLE);
-    }
-
-    public void rotateReel(View view) {
-        //Rotate the reel based on the sensor
-    }
 
 }
