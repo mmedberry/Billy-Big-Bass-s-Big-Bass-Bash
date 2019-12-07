@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Date;
 import java.util.List;
@@ -57,13 +58,29 @@ public class FishingActivity extends AppCompatActivity implements SensorUpdateCa
         setHookSensor.start(System.currentTimeMillis() / 1000);
     }
 
+    private void setHookToast(){
+
+        CharSequence text = "Shake device to set hook!";
+        Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG).show();
+    }
+
     @Override
     public void update(boolean success) {
         if (success) {
             catchFish();
             TextView text = findViewById(R.id.textView3);
             text.setText("Success!");
+            indicatorImage.clearAnimation();
+            indicatorImage.setVisibility(View.GONE);
+            indicatorImage = findViewById(R.id.reelView);
+            indicatorImage.setVisibility(View.VISIBLE);
+
         } else {
+
+            indicatorImage.clearAnimation();
+            indicatorImage.setVisibility(View.GONE);
+            indicatorImage = findViewById(R.id.fishView);
+            indicatorImage.setVisibility(View.VISIBLE);
             TextView text = findViewById(R.id.textView3);
             text.setText("Failure!");
         }
@@ -98,7 +115,7 @@ public class FishingActivity extends AppCompatActivity implements SensorUpdateCa
         protected String doInBackground(String... params) {
             try {
                 Random random = new Random();
-                this.time = random.nextInt(10) + 5;
+                this.time = random.nextInt(1) + 5;
                 int i = 0;
                 while (i < time * 10) {
                     publishProgress(orientation.toString());
@@ -118,16 +135,18 @@ public class FishingActivity extends AppCompatActivity implements SensorUpdateCa
         @Override
         protected void onPostExecute(String result) {
             MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.fish_hit);
+
+
             reelImage.animate().translationY(100.0f);
             mediaPlayer.start();
             SetHookSensor hookSensor = new SetHookSensor(context, fishingActivity);
             getSetHookSensorStatus(hookSensor);
+            setHookToast();
         }
 
         @Override
         protected void onProgressUpdate(String... values) {
             super.onProgressUpdate(values);
-            Log.v("orientation", "" + indicatorImage.getRotation());
             if (indicatorImage.getRotation() == 0.0f) {
                 indicatorImage.animate().rotation(30.0f);
             } else if (indicatorImage.getRotation() == 30.0f) {
@@ -144,8 +163,6 @@ public class FishingActivity extends AppCompatActivity implements SensorUpdateCa
         Log.v("reel", "clicked");
 
         reelImage.setVisibility(View.VISIBLE);
-        FishingAwaitTimer fishingAwaitTimer = new FishingAwaitTimer(indicatorImage.getRotation(), this, this);
-        fishingAwaitTimer.execute();
     }
 
     public void rotateReel(View view) {
