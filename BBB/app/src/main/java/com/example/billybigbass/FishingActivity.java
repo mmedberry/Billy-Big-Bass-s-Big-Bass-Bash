@@ -78,7 +78,6 @@ public class FishingActivity extends AppCompatActivity implements SensorUpdateCa
             ReelSensor rs = new ReelSensor(getApplicationContext(), this, fishModel.getDifficulty());
             rs.start();
         } else {
-
             indicatorImage.clearAnimation();
             indicatorImage.setVisibility(View.GONE);
             indicatorImage = findViewById(R.id.fishView);
@@ -92,9 +91,17 @@ public class FishingActivity extends AppCompatActivity implements SensorUpdateCa
     public void updateReel(float val, int flag){
         reelImage.setRotation(val);
         if (flag==1){
-            //Succeed
+            //Succeed - TODO Catch fish, display the image of the fish, and it's information
+            Log.w("FISH CAUGHT", " -- Name: " + fishModel.getName() + "Difficulty: " + fishModel.getDifficulty() + "Length: " + fishModel.getLength() + "Weight: " + fishModel.getWeight());
         }else if(flag==-1){
-            //Fail
+            //Fail - Display image of fish got away
+            Log.w("FISH LOST", " -- Name: " + fishModel.getName() + "Difficulty: " + fishModel.getDifficulty() + "Length: " + fishModel.getLength() + "Weight: " + fishModel.getWeight());
+            indicatorImage.clearAnimation();
+            indicatorImage.setVisibility(View.GONE);
+            indicatorImage = findViewById(R.id.fishView);
+            indicatorImage.setVisibility(View.VISIBLE);
+            TextView text = findViewById(R.id.textView3);
+            text.setText("It got away.");
         }
     }
 

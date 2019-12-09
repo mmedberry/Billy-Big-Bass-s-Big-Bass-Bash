@@ -25,9 +25,7 @@ public class ReelSensor implements SensorEventListener {
         double Gz = Math.abs(sensorEvent.values[2]);
         orientation += (float) ((Gx + Gy + Gz) / 5 - fishDifficulty / 2);
         mCallback.updateReel(orientation, 0);
-        if ((Gx + Gy + Gz) / 5 > 1) {
-            Log.w("Orientation: ", "" + orientation);
-        }
+        Log.w("Orientation: ", "" + orientation);
         if (checkFailed()) {
             stop(false);
         }
@@ -56,6 +54,10 @@ public class ReelSensor implements SensorEventListener {
         mSensorManager.registerListener(this, mAcc, SensorManager.SENSOR_DELAY_UI);
         startTime = System.currentTimeMillis();
         targetOrientation = 360.0f + fishDifficulty * 360.0f;
+        Log.w("Fish difficulty: ", ""+fishDifficulty);
+        Log.w("Succeed condition: ", targetOrientation + " degrees");
+        Log.w("Fail conditions: ", "Orientation - " + (-targetOrientation/2) + "Time Limit - " + (10 + fishDifficulty) + " seconds");
+        Log.w("","");
     }
 
     public ReelSensor(Context context, SensorUpdateCallback callback, int fishDifficulty) {
@@ -68,7 +70,6 @@ public class ReelSensor implements SensorEventListener {
     public void stop(boolean success) {
         if (success) {
             //Succeeded
-            Log.w("You caught: ", ""+fishDifficulty);
             mCallback.updateReel(orientation, 1);
         } else {
             //Failed
