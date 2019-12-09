@@ -91,7 +91,6 @@ public class FishingActivity extends AppCompatActivity implements SensorUpdateCa
     public void updateReel(float val, int flag){
         reelImage.setRotation(val);
         if (flag==1){
-
             catchFish();
             int resourceIdentifier = getResources().getIdentifier(fishModel.getName()+"_small","drawable", getPackageName());
             Bitmap fishImage = BitmapFactory.decodeResource(getResources(),resourceIdentifier);
