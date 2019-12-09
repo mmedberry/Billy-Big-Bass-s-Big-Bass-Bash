@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
@@ -67,7 +68,6 @@ public class FishingActivity extends AppCompatActivity implements SensorUpdateCa
     @Override
     public void updateHook(boolean success) {
         if (success) {
-            catchFish();
             TextView text = findViewById(R.id.textView3);
             text.setText("Fish hooked!");
             indicatorImage.clearAnimation();
@@ -91,7 +91,27 @@ public class FishingActivity extends AppCompatActivity implements SensorUpdateCa
     public void updateReel(float val, int flag){
         reelImage.setRotation(val);
         if (flag==1){
-            //Succeed - TODO Catch fish, display the image of the fish, and it's information
+
+            catchFish();
+            if(fishModel.getName().equals("trash")){
+                Bitmap fishImage = BitmapFactory.decodeResource(getResources(),R.drawable.trash_small);
+                indicatorImage.setImageBitmap(fishImage);
+            } else if(fishModel.getName().equals("minnow")){
+                Bitmap fishImage = BitmapFactory.decodeResource(getResources(),R.drawable.minnow_small);
+                indicatorImage.setImageBitmap(fishImage);
+            }else if(fishModel.getName().equals("trout")){
+                Bitmap fishImage = BitmapFactory.decodeResource(getResources(),R.drawable.trout_small);
+                indicatorImage.setImageBitmap(fishImage);
+            }
+            else if(fishModel.getName().equals("bass")){
+                Bitmap fishImage = BitmapFactory.decodeResource(getResources(),R.drawable.bass_small);
+                indicatorImage.setImageBitmap(fishImage);
+            }
+            TextView text = findViewById(R.id.textView3);
+            CharSequence charSequence = "You caught a "+fishModel.getName()+"!";
+            text.setText(charSequence);
+
+            //Succeed - TODO Catch fish, display the image of the fish, and its information
             Log.w("FISH CAUGHT", " -- Name: " + fishModel.getName() + "Difficulty: " + fishModel.getDifficulty() + "Length: " + fishModel.getLength() + "Weight: " + fishModel.getWeight());
         }else if(flag==-1){
             //Fail - Display image of fish got away
@@ -108,7 +128,7 @@ public class FishingActivity extends AppCompatActivity implements SensorUpdateCa
 
     public void cast(View view) {
         Random random = new Random();
-        String[] fishNames = {"minnow", "bluegill", "bass", "trash"};
+        String[] fishNames = {"minnow", "trout", "bass", "trash"};
         fishModel = new FishModel(fishNames[random.nextInt(4)]);
         Log.v("cast", "clicked");
         indicatorImage.setVisibility(View.VISIBLE);

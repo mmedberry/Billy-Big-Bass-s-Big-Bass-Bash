@@ -41,7 +41,7 @@ public class FishModel extends ViewModel {
                 mWeight = fishData.getWeight();
                 mDifficulty = fishData.getDifficulty();
                 break;
-            case "bluegill":
+            case "trout":
                 fishData = FishData.MEDIUM;
                 mLength = fishData.getLength();
                 mWeight = fishData.getWeight();
