@@ -101,7 +101,7 @@ public class FishingActivity extends AppCompatActivity implements SensorUpdateCa
             text.setText(charSequence);
 
             //Succeed - TODO Catch fish, display the image of the fish, and its information
-            Log.w("FISH CAUGHT", " -- Name: " + fishModel.getName() + "Difficulty: " + fishModel.getDifficulty() + "Length: " + fishModel.getLength() + "Weight: " + fishModel.getWeight());
+            Log.w("FISH CAUGHT", " -- Name: " + fishModel.getName() + " | Difficulty: " + fishModel.getDifficulty() + " | Length: " + fishModel.getLength() + " | Weight: " + fishModel.getWeight());
         }else if(flag==-1){
             //Fail - Display image of fish got away
             Log.w("FISH LOST", " -- Name: " + fishModel.getName() + " | Difficulty: " + fishModel.getDifficulty() + " | Length: " + fishModel.getLength() + " | Weight: " + fishModel.getWeight());
