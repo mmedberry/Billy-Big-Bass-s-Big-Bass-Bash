@@ -87,21 +87,22 @@ public class FishingActivity extends AppCompatActivity implements SensorUpdateCa
         }
 
     }
+
     @Override
-    public void updateReel(float val, int flag){
+    public void updateReel(float val, int flag) {
         reelImage.setRotation(val);
-        if (flag==1){
+        if (flag == 1) {
             catchFish();
-            int resourceIdentifier = getResources().getIdentifier(fishModel.getName()+"_small","drawable", getPackageName());
-            Bitmap fishImage = BitmapFactory.decodeResource(getResources(),resourceIdentifier);
+            int resourceIdentifier = getResources().getIdentifier(fishModel.getName() + "_small", "drawable", getPackageName());
+            Bitmap fishImage = BitmapFactory.decodeResource(getResources(), resourceIdentifier);
             indicatorImage.setImageBitmap(fishImage);
             TextView text = findViewById(R.id.textView3);
-            CharSequence charSequence = "You caught a(n) "+fishModel.getName()+"!";
+            CharSequence charSequence = "You caught a(n) " + fishModel.getName() + "!";
             text.setText(charSequence);
 
-            //Succeed - TODO Catch fish, display the image of the fish, and its information
+            //Succeed - TODO Display caught fish information
             Log.w("FISH CAUGHT", " -- Name: " + fishModel.getName() + " | Difficulty: " + fishModel.getDifficulty() + " | Length: " + fishModel.getLength() + " | Weight: " + fishModel.getWeight());
-        }else if(flag==-1){
+        } else if (flag == -1) {
             //Fail - Display image of fish got away
             Log.w("FISH LOST", " -- Name: " + fishModel.getName() + " | Difficulty: " + fishModel.getDifficulty() + " | Length: " + fishModel.getLength() + " | Weight: " + fishModel.getWeight());
             indicatorImage.clearAnimation();
@@ -113,7 +114,7 @@ public class FishingActivity extends AppCompatActivity implements SensorUpdateCa
         }
     }
 
-
+    //TODO need to make casting motion controlled
     public void cast(View view) {
         Random random = new Random();
         String[] fishNames = {"minnow", "trout", "bass", "trash"};

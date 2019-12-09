@@ -28,7 +28,7 @@ public class RecordsActivity extends AppCompatActivity {
     /**
      * Method to display past fish caught and the record fish of each category
      */
-    //TODO Make this better
+    //TODO Implement recycler view to add scrolling
     public void updateUI() {
         List<Fish> fishList = database.eventDao().getAll();
         List<Fish> highScores = userDataModel.getHighScores().getFishList();
