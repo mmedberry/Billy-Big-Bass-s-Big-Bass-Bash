@@ -115,8 +115,7 @@ public class FishingActivity extends AppCompatActivity implements SensorUpdateCa
             indicatorImage.setImageBitmap(fishImage);
             TextView text = findViewById(R.id.textView3);
             text.setText("It got away.\nBetter luck next time!");
-        }
-        else{
+        } else {
             indicatorImage.setRotation(val);
         }
     }
