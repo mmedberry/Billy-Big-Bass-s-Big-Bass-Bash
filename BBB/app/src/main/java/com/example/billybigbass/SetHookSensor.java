@@ -16,14 +16,13 @@ public class SetHookSensor implements SensorEventListener {
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         double Gx = sensorEvent.values[0];
-        if (Math.abs(Gx) >= 5) {
-            long stop = System.currentTimeMillis()/1000;
-            if (stop-start<=2){
+        long stop = System.currentTimeMillis() / 1000;
+        if (stop - start > 2) {
+            mCallback.updateHook(false);
+            stop();
+        } else {
+            if (Math.abs(Gx) >= 5) {
                 mCallback.updateHook(true);
-                stop();
-            }
-            else{
-                mCallback.updateHook(false);
                 stop();
             }
         }

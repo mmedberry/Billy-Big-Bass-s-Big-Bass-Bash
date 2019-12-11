@@ -60,7 +60,6 @@ public class FishingActivity extends AppCompatActivity implements SensorUpdateCa
     }
 
     private void setHookToast() {
-
         CharSequence text = "Shake device to set hook!";
         Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG).show();
     }
@@ -168,13 +167,11 @@ public class FishingActivity extends AppCompatActivity implements SensorUpdateCa
 
         @Override
         protected void onPostExecute(String result) {
+            setHookToast();
             MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.fish_hit);
-
-
             mediaPlayer.start();
             SetHookSensor hookSensor = new SetHookSensor(context, fishingActivity);
             getSetHookSensorStatus(hookSensor);
-            setHookToast();
         }
 
         @Override
