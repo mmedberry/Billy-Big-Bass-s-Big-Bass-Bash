@@ -58,17 +58,12 @@ public class FishingActivity extends AppCompatActivity implements SensorUpdateCa
     public void getSetHookSensorStatus(SetHookSensor setHookSensor) {
         setHookSensor.start(System.currentTimeMillis() / 1000);
     }
-
-    private void setHookToast() {
-        CharSequence text = "Shake device to set hook!";
-        Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG).show();
-    }
+    
 
     @Override
     public void updateHook(boolean success) {
         if (success) {
-            TextView text = findViewById(R.id.textView3);
-            text.setText("Fish hooked!");
+            setText("Fish hooked! Reel in!");
             indicatorImage.clearAnimation();
             indicatorImage.setRotation(0.0f);
             Bitmap reelImage = BitmapFactory.decodeResource(getResources(), R.drawable.reel);
@@ -81,8 +76,7 @@ public class FishingActivity extends AppCompatActivity implements SensorUpdateCa
             indicatorImage.setRotation(0.0f);
             Bitmap fishImage = BitmapFactory.decodeResource(getResources(), R.drawable.sad_fish);
             indicatorImage.setImageBitmap(fishImage);
-            TextView text = findViewById(R.id.textView3);
-            text.setText("It got away.\nBetter luck next time!");
+            setText("It got away.\nBetter luck next time!");
         }
 
     }
@@ -96,14 +90,14 @@ public class FishingActivity extends AppCompatActivity implements SensorUpdateCa
             int resourceIdentifier = getResources().getIdentifier(fishModel.getName() + "_small", "drawable", getPackageName());
             Bitmap fishImage = BitmapFactory.decodeResource(getResources(), resourceIdentifier);
             indicatorImage.setImageBitmap(fishImage);
-            TextView text = findViewById(R.id.textView3);
+
             String successMessage;
             if (highScore) {
                 successMessage = String.format("HIGH SCORE!\nYou caught a(n) %s!\nLength: %d\nWeight: %d", fishModel.getName(), fishModel.getLength(), fishModel.getWeight());
             } else {
                 successMessage = String.format("You caught a(n) %s!\nLength: %d\nWeight: %d", fishModel.getName(), fishModel.getLength(), fishModel.getWeight());
             }
-            text.setText(successMessage);
+            setText(successMessage);
             Log.w("FISH CAUGHT", " -- Name: " + fishModel.getName() + " | Difficulty: " + fishModel.getDifficulty() + " | Length: " + fishModel.getLength() + " | Weight: " + fishModel.getWeight());
         } else if (flag == -1) {
             //Fail - Display image of fish got away
@@ -112,10 +106,23 @@ public class FishingActivity extends AppCompatActivity implements SensorUpdateCa
             indicatorImage.setRotation(0.0f);
             Bitmap fishImage = BitmapFactory.decodeResource(getResources(), R.drawable.sad_fish);
             indicatorImage.setImageBitmap(fishImage);
-            TextView text = findViewById(R.id.textView3);
-            text.setText("It got away.\nBetter luck next time!");
+            setText("It got away.\nBetter luck next time!");
         } else {
             indicatorImage.setRotation(val);
+        }
+    }
+
+    public void updateCast(boolean success) {
+        if (success) {
+            setText("Wait for a bite.");
+            indicatorImage.setVisibility(View.VISIBLE);
+            fishingAwaitTimer = new FishingAwaitTimer(indicatorImage.getRotation(), this, this);
+            fishingAwaitTimer.execute();
+        } else {
+            Bitmap fishImage = BitmapFactory.decodeResource(getResources(), R.drawable.sad_fish);
+            indicatorImage.setImageBitmap(fishImage);
+            TextView text = findViewById(R.id.textView3);
+            text.setText("Bad cast. Try again.");
         }
     }
 
@@ -125,10 +132,15 @@ public class FishingActivity extends AppCompatActivity implements SensorUpdateCa
         String[] fishNames = {"minnow", "trout", "bass", "trash"};
         fishModel = new FishModel(fishNames[random.nextInt(4)]);
         Log.v("cast", "clicked");
-        indicatorImage.setVisibility(View.VISIBLE);
-        fishingAwaitTimer = new FishingAwaitTimer(indicatorImage.getRotation(), this, this);
-        fishingAwaitTimer.execute();
+
         findViewById(R.id.button3).setVisibility(View.GONE);
+        setText("Move phone backward then forward to cast.");
+        new CastSensor(this.getApplicationContext(), this);
+    }
+
+    private void setText(String text) {
+        TextView textView = findViewById(R.id.textView3);
+        textView.setText(text);
     }
 
     private class FishingAwaitTimer extends AsyncTask<String, String, String> {
@@ -167,7 +179,7 @@ public class FishingActivity extends AppCompatActivity implements SensorUpdateCa
 
         @Override
         protected void onPostExecute(String result) {
-            setHookToast();
+            setText("Shake to set hook!");
             MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.fish_hit);
             mediaPlayer.start();
             SetHookSensor hookSensor = new SetHookSensor(context, fishingActivity);

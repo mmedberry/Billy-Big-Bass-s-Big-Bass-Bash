@@ -12,4 +12,5 @@ public interface SensorUpdateCallback {
      */
     void updateHook(boolean success);
     void updateReel(float val, int flag);
+    void updateCast(boolean success);
 }
