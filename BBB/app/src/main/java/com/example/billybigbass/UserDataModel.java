@@ -16,17 +16,28 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * ViewModel to contain and save/load the UserData
+ */
 public class UserDataModel extends ViewModel implements Serializable {
     private HighScores highScores;
-    public UserDataModel(Context context){
-        highScores=loadUserData(context);
+
+    public UserDataModel(Context context) {
+        highScores = loadUserData(context);
     }
-    public HighScores getHighScores(){
+
+    /**
+     * Returns the list of high score Fish objects
+     *
+     * @return highScores
+     */
+    public HighScores getHighScores() {
         return highScores;
     }
 
     /**
      * Saves user high scores to local file system
+     *
      * @param context
      */
     public void saveUserData(Context context) {
@@ -45,6 +56,7 @@ public class UserDataModel extends ViewModel implements Serializable {
 
     /**
      * Loads user high scores from local file system
+     *
      * @param context
      * @return HighScores to populate a UserDataModel object
      */

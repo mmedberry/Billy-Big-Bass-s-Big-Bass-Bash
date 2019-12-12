@@ -10,9 +10,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+/**
+ * Populates the RecyclerView with fishing results
+ */
 public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ResultsViewHolder> {
     private List<Fish> fishList;
 
+    /**
+     * Holds a TextView with the caught fish data
+     */
     public static class ResultsViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public TextView textView;
@@ -26,14 +32,14 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ResultsV
     @NonNull
     @Override
     public ResultsAdapter.ResultsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v =  LayoutInflater.from(parent.getContext()).inflate(R.layout.fish_result, parent, false);
-        return new ResultsViewHolder( v);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fish_result, parent, false);
+        return new ResultsViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ResultsAdapter.ResultsViewHolder holder, int position) {
         Fish fish = fishList.get(position);
-        String text = String.format("%d. %s, length: %d, weight: %d", position+1, fish.getName(), fish.getLength(), fish.getWeight());
+        String text = String.format("%d. %s, length: %d, weight: %d", position + 1, fish.getName(), fish.getLength(), fish.getWeight());
         holder.textView.setText(text);
     }
 

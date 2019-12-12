@@ -5,7 +5,6 @@ import java.util.Random;
 /**
  * Provides data for a new fish, based on the fishes size. Creates randomized length and weight.
  */
-//TODO Add more variety. More types, different fields maybe?
 public enum FishData {
     LARGE(3),
     MEDIUM(2),
@@ -15,14 +14,26 @@ public enum FishData {
     private int weight;
     private int difficulty;
 
+    /**
+     * Get the randomized FishData length
+     * @return length
+     */
     public int getLength() {
         return length;
     }
 
+    /**
+     * Get the randomized FishData Weight
+     * @return weight
+     */
     public int getWeight() {
         return weight;
     }
 
+    /**
+     * Get the FishData Difficulty
+     * @return difficulty
+     */
     public int getDifficulty() {
         return difficulty;
     }

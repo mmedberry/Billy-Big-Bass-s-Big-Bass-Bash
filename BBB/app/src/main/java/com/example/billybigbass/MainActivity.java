@@ -10,11 +10,12 @@ import android.os.Vibrator;
 import android.view.View;
 
 import java.io.Serializable;
-//TODO Make this screen cooler 😎
+
 public class MainActivity extends AppCompatActivity implements Serializable {
 
     private AppDatabase database;
     private UserDataModel userDataModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements Serializable {
 
     /**
      * Navigate to FishingActivity
+     *
      * @param view
      */
     public void startFishingActivity(View view) {
@@ -40,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements Serializable {
 
     /**
      * Navigate to RecordsActivity
+     *
      * @param view
      */
     public void startRecordsActivity(View view) {

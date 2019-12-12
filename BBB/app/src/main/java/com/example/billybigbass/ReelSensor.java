@@ -7,7 +7,9 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.util.Log;
 
-
+/**
+ * Uses the accelerometer to simulate using a fishing reel. Sends back if the fish was caught or lost and degrees to turn the reel image.
+ */
 public class ReelSensor implements SensorEventListener {
 
     private SensorManager mSensorManager;//used to store the SensorManager for use throughout the model class
@@ -38,6 +40,10 @@ public class ReelSensor implements SensorEventListener {
     public void onAccuracyChanged(Sensor sensor, int i) {
     }
 
+    /**
+     * Checks if the fish was lost
+     * @return true if fish was lost, false if fish was not lost
+     */
     private boolean checkFailed() {
         if (System.currentTimeMillis() > startTime + 10000 + fishDifficulty * 1000) {
             Log.w("FAILED:", "Ran out of time: " + (10 + fishDifficulty) + " seconds");
@@ -50,14 +56,17 @@ public class ReelSensor implements SensorEventListener {
         }
     }
 
+    /**
+     * Start the ReelSensor
+     */
     public void start() {
         mSensorManager.registerListener(this, mAcc, SensorManager.SENSOR_DELAY_UI);
         startTime = System.currentTimeMillis();
         targetOrientation = 360.0f + fishDifficulty * 360.0f;
-        Log.w("Fish difficulty: ", ""+fishDifficulty);
+        Log.w("Fish difficulty: ", "" + fishDifficulty);
         Log.w("Succeed condition: ", targetOrientation + " degrees");
-        Log.w("Fail conditions: ", "Orientation - " + (-targetOrientation/2) + "Time Limit - " + (10 + fishDifficulty) + " seconds");
-        Log.w("","");
+        Log.w("Fail conditions: ", "Orientation - " + (-targetOrientation / 2) + "Time Limit - " + (10 + fishDifficulty) + " seconds");
+        Log.w("", "");
     }
 
     public ReelSensor(Context context, SensorUpdateCallback callback, int fishDifficulty) {
@@ -67,6 +76,10 @@ public class ReelSensor implements SensorEventListener {
         mCallback = callback;
     }
 
+    /**
+     * Stop the ReelSensor. Sends if the fish was caught or lost to the Activity to update UI.
+     * @param success true if fish caught, false if fish lost
+     */
     public void stop(boolean success) {
         if (success) {
             //Succeeded

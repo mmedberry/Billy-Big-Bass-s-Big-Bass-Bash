@@ -13,6 +13,9 @@ import android.widget.TextView;
 
 import java.util.List;
 
+/**
+ * Activity to display past caught fish and high scores
+ */
 public class RecordsActivity extends AppCompatActivity {
 
     private AppDatabase database;
@@ -39,10 +42,9 @@ public class RecordsActivity extends AppCompatActivity {
     }
 
     /**
-     * Method to display past fish caught and the record fish of each category
+     * Method to display high scores
      */
-    //TODO Implement recycler view to add scrolling
-    public void updateUI() {
+    private void updateUI() {
         List<Fish> highScores = userDataModel.getHighScores().getFishList();
         TableLayout highScoresTable = findViewById(R.id.highScoresTable);
         for (Fish fish : highScores) {

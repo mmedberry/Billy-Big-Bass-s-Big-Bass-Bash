@@ -6,17 +6,26 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
+/**
+ * SensorEventListener using the accelerometer to sense "cast" motions
+ */
 public class CastSensor implements SensorEventListener {
-    double firstMovement = 0.0;
+    /**
+     * Contains the magnitude and direction of the first movement of the cast motion
+     */
+    private double firstMovement = 0.0;
     private SensorManager mSensorManager;//used to store the SensorManager for use throughout the model class
     private Sensor mAcc;//used to get and start/register the Sensor
     private SensorUpdateCallback mCallback;//used to keep track of the activity to callback to
+    /**
+     * The timestamp of the first cast movement. Works to slow down the sensor to wait for a reasonable amount of time for the user to make motion.
+     */
     private double firstMovementTime;
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         double Gx = sensorEvent.values[0];
-        if (Math.abs(Gx) > 5) {
+        if (Math.abs(Gx) > 5) { //limit read input to exclude background readings
             if (firstMovement == 0.0) {
                 firstMovement = Gx;
                 firstMovementTime = System.currentTimeMillis();
@@ -51,7 +60,10 @@ public class CastSensor implements SensorEventListener {
         mSensorManager.registerListener(this, mAcc, SensorManager.SENSOR_DELAY_UI);
     }
 
-    public void stop() {
+    /**
+     * Private helper method to stop the sensor after it's no longer needed.
+     */
+    private void stop() {
         mSensorManager.unregisterListener(this);
     }
 

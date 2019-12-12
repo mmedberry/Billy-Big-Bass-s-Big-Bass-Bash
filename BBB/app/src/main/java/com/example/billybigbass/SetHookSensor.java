@@ -6,6 +6,9 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
+/**
+ * SensorEventListener using the accelerometer to check if the fish was successfully hooked
+ */
 public class SetHookSensor implements SensorEventListener {
 
     private SensorManager mSensorManager;//used to store the SensorManager for use throughout the model class
@@ -33,6 +36,10 @@ public class SetHookSensor implements SensorEventListener {
 
     }
 
+    /**
+     * Start the sensor
+     * @param start time the sensor was started
+     */
     public void start(long start) {
         this.start = start;
         mSensorManager.registerListener(this, mAcc, SensorManager.SENSOR_DELAY_UI);
@@ -44,6 +51,9 @@ public class SetHookSensor implements SensorEventListener {
         mCallback = callback;
     }
 
+    /**
+     * Stops the sensor
+     */
     public void stop() {
         mSensorManager.unregisterListener(this);
     }

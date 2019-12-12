@@ -44,6 +44,11 @@ public class FishingActivity extends AppCompatActivity implements SensorUpdateCa
         }
     }
 
+    /**
+     * Adds the newly caught fish to the database and high scores if applicable
+     *
+     * @return true if fish added to high scores, false otherwise
+     */
     private boolean catchFish() {
         Fish fish = new Fish(fishModel.getName(), fishModel.getLength(), fishModel.getWeight());
         database.eventDao().insertFish(fish);
@@ -55,11 +60,20 @@ public class FishingActivity extends AppCompatActivity implements SensorUpdateCa
         return false;
     }
 
+    /**
+     * Starts the SetHookSensor with the current time
+     *
+     * @param setHookSensor SetHookSensor from AsyncTask
+     */
     public void getSetHookSensorStatus(SetHookSensor setHookSensor) {
         setHookSensor.start(System.currentTimeMillis() / 1000);
     }
-    
 
+    /**
+     * Callback for SetHookSensor
+     *
+     * @param success true if fish hooked, false if failed
+     */
     @Override
     public void updateHook(boolean success) {
         if (success) {
@@ -81,6 +95,12 @@ public class FishingActivity extends AppCompatActivity implements SensorUpdateCa
 
     }
 
+    /**
+     * Callback for ReelSensor, updates the rotation of the reel image, or changes image if fish is caught or lost
+     *
+     * @param val  Degrees to rotate image
+     * @param flag 0 if rotating image, 1 if fish caught, -1 if fish lost
+     */
     @Override
     public void updateReel(float val, int flag) {
 
@@ -112,6 +132,11 @@ public class FishingActivity extends AppCompatActivity implements SensorUpdateCa
         }
     }
 
+    /**
+     * Callback for CastSensor
+     *
+     * @param success true if success, else false
+     */
     public void updateCast(boolean success) {
         if (success) {
             setText("Wait for a bite.");
@@ -126,7 +151,11 @@ public class FishingActivity extends AppCompatActivity implements SensorUpdateCa
         }
     }
 
-    //TODO need to make casting motion controlled
+    /**
+     * onClick method for "Cast" button. Starts CastSensor
+     *
+     * @param view button
+     */
     public void cast(View view) {
         Random random = new Random();
         String[] fishNames = {"minnow", "trout", "bass", "trash"};
@@ -138,11 +167,19 @@ public class FishingActivity extends AppCompatActivity implements SensorUpdateCa
         new CastSensor(this.getApplicationContext(), this);
     }
 
+    /**
+     * Private helper to set text indicating the stage of the fish catching process.
+     *
+     * @param text Desired message to display
+     */
     private void setText(String text) {
         TextView textView = findViewById(R.id.textView3);
         textView.setText(text);
     }
 
+    /**
+     * AsyncTask to wait for a fish to bite the hook. Animates the
+     */
     private class FishingAwaitTimer extends AsyncTask<String, String, String> {
         private String resp;
         int time;
@@ -160,7 +197,7 @@ public class FishingActivity extends AppCompatActivity implements SensorUpdateCa
         protected String doInBackground(String... params) {
             try {
                 Random random = new Random();
-                this.time = random.nextInt(1) + 5;
+                this.time = random.nextInt(fishModel.getDifficulty() * 3 + 1) + 1; //randomly generate time for bobber to animate
                 int i = 0;
                 while (i < time * 10) {
                     publishProgress(orientation.toString());
@@ -189,6 +226,7 @@ public class FishingActivity extends AppCompatActivity implements SensorUpdateCa
         @Override
         protected void onProgressUpdate(String... values) {
             super.onProgressUpdate(values);
+            //below lines animate bobber image
             if (indicatorImage.getRotation() == 0.0f) {
                 indicatorImage.animate().rotation(30.0f);
             } else if (indicatorImage.getRotation() == 30.0f) {

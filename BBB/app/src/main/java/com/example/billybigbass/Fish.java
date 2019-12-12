@@ -58,18 +58,34 @@ public class Fish implements Serializable {
     public Fish() {
     }
 
+    /**
+     * Get Uid of Fish
+     * @return uid
+     */
     public int getUid() {
         return uid;
     }
 
+    /**
+     * Get name of fish
+     * @return name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Get length of fish
+     * @return length
+     */
     public int getLength() {
         return length;
     }
 
+    /**
+     * Get weight of fish
+     * @return weight
+     */
     public int getWeight() {
         return weight;
     }

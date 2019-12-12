@@ -11,24 +11,45 @@ public class FishModel extends ViewModel {
     private int mWeight;
     private int mDifficulty;
 
+    /**
+     * Get the type of fish
+     *
+     * @return name of fish
+     */
     public String getName() {
         return mName;
     }
 
+    /**
+     * Get the length of fish
+     *
+     * @return length
+     */
     public int getLength() {
         return mLength;
     }
 
+    /**
+     * Get the weight of fish
+     *
+     * @return weight
+     */
     public int getWeight() {
         return mWeight;
     }
 
+    /**
+     * Get the difficulty of the fish
+     *
+     * @return difficulty
+     */
     public int getDifficulty() {
         return mDifficulty;
     }
 
     /**
      * Constructor to create a randomized FishModel with given type
+     *
      * @param name Type of fish to create
      */
     public FishModel(String name) {
