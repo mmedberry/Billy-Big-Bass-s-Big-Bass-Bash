@@ -2,6 +2,8 @@ package com.example.billybigbass;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +17,9 @@ public class RecordsActivity extends AppCompatActivity {
 
     private AppDatabase database;
     private UserDataModel userDataModel;
+    private RecyclerView recyclerView;
+    private LinearLayoutManager layoutManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +27,14 @@ public class RecordsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_records);
         database = AppDatabase.getAppDatabase(this);
         userDataModel = (UserDataModel) getIntent().getSerializableExtra("userDataModel");
+        recyclerView = findViewById(R.id.resultTable);
+        recyclerView.setHasFixedSize(true);
+        // use a linear layout manager
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
+        // specify an adapter (see also next example)
+        recyclerView.setAdapter(new ResultsAdapter(database.eventDao().getAll()));
         updateUI();
     }
 
@@ -30,20 +43,8 @@ public class RecordsActivity extends AppCompatActivity {
      */
     //TODO Implement recycler view to add scrolling
     public void updateUI() {
-        List<Fish> fishList = database.eventDao().getAll();
         List<Fish> highScores = userDataModel.getHighScores().getFishList();
-        TableLayout table = findViewById(R.id.resultTable);
         TableLayout highScoresTable = findViewById(R.id.highScoresTable);
-        int i = 0;
-        for (Fish fish : fishList) {
-            i++;
-            TableRow tableRow = new TableRow(this);
-            TextView textView = new TextView(this);
-            String text = String.format("%d. %s, length: %d, weight: %d", i, fish.getName(), fish.getLength(), fish.getWeight());
-            textView.setText(text);
-            tableRow.addView(textView);
-            table.addView(tableRow);
-        }
         for (Fish fish : highScores) {
             TableRow tableRow = new TableRow(this);
             TextView textView = new TextView(this);
